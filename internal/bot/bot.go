@@ -5,12 +5,15 @@ import (
 
 	"github.com/Devil666face/gotubebot/pkg/config"
 	"github.com/Devil666face/gotubebot/pkg/models"
+	"github.com/Devil666face/gotubebot/pkg/routes"
 	"github.com/Devil666face/gotubebot/pkg/store/database"
+	"github.com/Devil666face/gotubebot/pkg/store/mem"
+	"github.com/vitaliy-ukiru/fsm-telebot"
 
 	telebot "gopkg.in/telebot.v3"
 )
 
-func StartBot() (*telebot.Bot, error) {
+func Get() (*telebot.Bot, error) {
 	if err := config.New(); err != nil {
 		return nil, err
 	}
@@ -22,14 +25,24 @@ func StartBot() (*telebot.Bot, error) {
 	); err != nil {
 		return nil, err
 	}
-	return New(config.Cfg)
+	bot, err := newBot()
+	if err != nil {
+		return nil, err
+	}
+	manager := newFsmManager(bot)
+	routes.New(bot, manager)
+	return bot, nil
 }
 
-func New(cfg config.Config) (*telebot.Bot, error) {
+func newBot() (*telebot.Bot, error) {
 	return telebot.NewBot(telebot.Settings{
-		Token:     cfg.Token,
+		Token:     config.Cfg.Token,
 		Poller:    &telebot.LongPoller{Timeout: 10 * time.Second},
-		Verbose:   cfg.Debug,
+		Verbose:   config.Cfg.Debug,
 		ParseMode: telebot.ModeHTML,
 	})
+}
+
+func newFsmManager(bot *telebot.Bot) *fsm.Manager {
+	return fsm.NewManager(bot, nil, mem.New(), nil)
 }

@@ -5,6 +5,7 @@ go 1.21.0
 require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/joho/godotenv v1.5.1
+	github.com/vitaliy-ukiru/fsm-telebot v1.2.0
 	gopkg.in/telebot.v3 v3.1.3
 	gorm.io/driver/sqlite v1.5.3
 	gorm.io/gorm v1.25.4

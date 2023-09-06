@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	bot, err := bot.StartBot()
+	bot, err := bot.Get()
 	if err != nil {
 		log.Fatal(err)
 	}
