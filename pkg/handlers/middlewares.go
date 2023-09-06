@@ -6,6 +6,7 @@ import (
 
 	"github.com/Devil666face/gotubebot/pkg/callbacks"
 	"github.com/Devil666face/gotubebot/pkg/models"
+	"github.com/vitaliy-ukiru/fsm-telebot"
 
 	telebot "gopkg.in/telebot.v3"
 	"gopkg.in/telebot.v3/middleware"
@@ -14,29 +15,54 @@ import (
 func CallbackKeyValueMiddleware(next telebot.HandlerFunc) telebot.HandlerFunc {
 	return func(c telebot.Context) error {
 		if c.Callback() != nil {
-			r := strings.ReplaceAll(c.Callback().Data, "\f", "")
-			data := strings.Split(r, ":")
-			c.Set(callbacks.CallbackKey, data[0])
-			c.Set(callbacks.CallbackVal, data[1])
+			callbackData := strings.ReplaceAll(c.Callback().Data, "\f", "")
+			callbackPayload := strings.Split(callbackData, ":")
+			c.Set(callbacks.CallbackKey, callbackPayload[0])
+			c.Set(callbacks.CallbackVal, callbackPayload[1])
 		}
 		return next(c)
 	}
 }
 
-func permission(selectorFunc func() ([]models.User, error), next telebot.HandlerFunc) telebot.HandlerFunc {
+func AdminOnlyMiddleware(next telebot.HandlerFunc) telebot.HandlerFunc {
+	return getPermissionHandleFunc(models.GetAllAdmins, next)
+}
+
+func AllowOnlyMiddleware(next telebot.HandlerFunc) telebot.HandlerFunc {
+	return getPermissionHandleFunc(models.GetAllAllows, next)
+}
+
+func getPermissionHandleFunc(selectorFunc func() ([]models.User, error), next telebot.HandlerFunc) telebot.HandlerFunc {
 	chats, err := models.GetChatIdsForSelector(selectorFunc)
 	if err != nil {
 		log.Print(err)
-		return middleware.Whitelist()(next)
+		return nil
 	}
 	return middleware.Whitelist(chats...)(next)
 
 }
 
-func AdminOnlyMiddleware(next telebot.HandlerFunc) telebot.HandlerFunc {
-	return permission(models.GetAllAdmins, next)
+func AdminOnlyDecorator(next fsm.Handler) fsm.Handler {
+	return getPermissonHanler(models.GetAllAdmins, next)
 }
 
-func AllowOnlyMiddleware(next telebot.HandlerFunc) telebot.HandlerFunc {
-	return permission(models.GetAllAllows, next)
+func AllowOnlyDecorator(next fsm.Handler) fsm.Handler {
+	return getPermissonHanler(models.GetAllAllows, next)
+}
+
+func getPermissonHanler(selectorFunc func() ([]models.User, error), next fsm.Handler) fsm.Handler {
+	return func(c telebot.Context, s fsm.Context) error {
+		chats, err := models.GetChatIdsForSelector(selectorFunc)
+		if err != nil {
+			log.Print(err)
+			return nil
+		}
+		for _, id := range chats {
+			if c.Chat().ID == id {
+				return next(c, s)
+			}
+		}
+		return nil
+	}
+
 }

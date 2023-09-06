@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"log"
-
 	"github.com/Devil666face/gotubebot/pkg/callbacks"
 	"github.com/Devil666face/gotubebot/pkg/keyboards"
 	"github.com/Devil666face/gotubebot/pkg/messages"
@@ -13,8 +11,8 @@ import (
 	telebot "gopkg.in/telebot.v3"
 )
 
-func OnConfirmUser(c telebot.Context) error {
-	deleteLastMessage(c)
+func OnConfirmUser(c telebot.Context, _ fsm.Context) error {
+	defer delete(c)
 	id := utils.ToInt64(c.Get(callbacks.CallbackVal))
 	user := models.User{}
 	if notfound := user.GetUserByTgID(id); notfound != nil {
@@ -35,15 +33,6 @@ func OnConfirmUser(c telebot.Context) error {
 	)
 }
 
-func OnIgnoreUser(c telebot.Context) error {
+func OnIgnoreUser(c telebot.Context, _ fsm.Context) error {
 	return c.Delete()
-}
-
-func OnBackBtn(c telebot.Context, f fsm.Context) error {
-	if err := f.Finish(true); err != nil {
-		log.Print(err)
-	}
-	return c.Send(
-		messages.GoBack, keyboards.MainMenu,
-	)
 }

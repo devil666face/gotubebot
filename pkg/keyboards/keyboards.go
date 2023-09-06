@@ -12,13 +12,20 @@ var (
 	PlaylistsBtn = telebot.ReplyButton{
 		Text: messages.Playlists,
 	}
+	MainMenu = &telebot.ReplyMarkup{
+		ReplyKeyboard: [][]telebot.ReplyButton{
+			{VideosBtn, PlaylistsBtn},
+		},
+		ResizeKeyboard: true,
+	}
+)
+
+var (
 	BackBtn = telebot.ReplyButton{
 		Text: messages.Back,
 	}
-	MainMenu = &telebot.ReplyMarkup{
+	BackMenu = &telebot.ReplyMarkup{
 		ReplyKeyboard: [][]telebot.ReplyButton{
-			{VideosBtn},
-			{PlaylistsBtn},
 			{BackBtn},
 		},
 		ResizeKeyboard: true,

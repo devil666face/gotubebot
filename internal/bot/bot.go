@@ -21,6 +21,7 @@ func Get() (*telebot.Bot, error) {
 		return nil, err
 	}
 	if err := database.Migrate(
+		&models.Video{},
 		&models.User{},
 	); err != nil {
 		return nil, err
@@ -30,7 +31,7 @@ func Get() (*telebot.Bot, error) {
 		return nil, err
 	}
 	manager := newFsmManager(bot)
-	routes.New(bot, manager)
+	routes.New(manager)
 	return bot, nil
 }
 
@@ -43,6 +44,8 @@ func newBot() (*telebot.Bot, error) {
 	})
 }
 
-func newFsmManager(bot *telebot.Bot) *fsm.Manager {
-	return fsm.NewManager(bot, nil, mem.New(), nil)
+func newFsmManager(bot *telebot.Bot) *routes.Manager {
+	return &routes.Manager{
+		fsm.NewManager(bot, nil, mem.New(), nil),
+	}
 }
