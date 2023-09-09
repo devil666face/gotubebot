@@ -78,5 +78,15 @@ func OnRecivePlaylistUrl(c telebot.Context, s fsm.Context) error {
 		}(c, video)
 	}
 
-	return c.Send(messages.SuccessfulCreatePlaylist(playlist.Title), keyboards.PlaylistMenu)
+	return c.Send(playlist.String(), keyboards.PlaylistMenu)
+}
+
+func OnEditPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
+	defer delete(c)
+	playlist := models.Playlist{}
+	if err := playlist.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
+		log.Print(err)
+		return c.Send(messages.ErrGetPlaylist, keyboards.MainMenu)
+	}
+	return c.Send(playlist.String(), keyboards.EditPlaylistInline(playlist.ID))
 }

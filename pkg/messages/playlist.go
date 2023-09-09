@@ -1,15 +1,12 @@
 package messages
 
-import "fmt"
-
 const (
 	CreatePlaylist        = "Create playlist"
 	ChangePlaylist        = "Change playlist"
 	PlaylistList          = "All playlists"
 	SendPlaylistUrl       = "Send url to playlist"
+	ShowPlaylist          = "Show videos"
+	UpdatePlaylist        = "Update videos loaded links"
 	ErrLoadPlaylistFromYt = "Error to load playlist"
+	ErrGetPlaylist        = "Error when get playlist"
 )
-
-func SuccessfulCreatePlaylist(title string) string {
-	return fmt.Sprintf("Successful create playlist: %s", title)
-}

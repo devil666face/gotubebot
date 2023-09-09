@@ -2,7 +2,7 @@ package models
 
 import (
 	// "errors"
-	// "fmt"
+	"fmt"
 	// "log"
 
 	"github.com/Devil666face/gotubebot/pkg/utils"
@@ -18,6 +18,17 @@ type Playlist struct {
 	Url    string
 	UserID uint
 	Videos []Video
+}
+
+func (playlist Playlist) String() string {
+	return fmt.Sprintf("<a href='%s'>%s</a>", playlist.Url, playlist.Title)
+}
+
+func (playlist *Playlist) Get(id uint) error {
+	if err := database.DB.First(playlist, id); err != nil {
+		return err.Error
+	}
+	return nil
 }
 
 func (playlist *Playlist) ParseYt() ([]Video, error) {

@@ -63,6 +63,7 @@ func OnEditVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
 	defer delete(c)
 	video := models.Video{}
 	if err := video.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
+		log.Print(err)
 		return c.Send(messages.ErrGetVideo, keyboards.MainMenu)
 	}
 	return c.Send(video.String(), keyboards.UpdateOrDeleteVideoInline(video.ID))

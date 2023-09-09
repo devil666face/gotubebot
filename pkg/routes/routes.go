@@ -12,11 +12,12 @@ import (
 )
 
 var callbackMap = map[string]func(telebot.Context, fsm.Context) error{
-	callbacks.ConfirmUser: handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
-	callbacks.IgnoreUser:  handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
-	callbacks.EditVideo:   handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
-	callbacks.UpdateVideo: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdateVideoInlineBtn)),
-	callbacks.DeleteVideo: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeleteVideoInlineBtn)),
+	callbacks.ConfirmUser:  handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
+	callbacks.IgnoreUser:   handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
+	callbacks.EditVideo:    handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
+	callbacks.UpdateVideo:  handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdateVideoInlineBtn)),
+	callbacks.DeleteVideo:  handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeleteVideoInlineBtn)),
+	callbacks.EditPlaylist: handlers.AllowOnlyDecorator(handlers.OnEditPlaylistInlineBtn),
 }
 
 type Manager struct {
