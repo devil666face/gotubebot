@@ -15,7 +15,7 @@ func Sqlite3Database(cfg config.Config) error {
 	if err != nil {
 		return err
 	}
-	if DB, err = gorm.Open(sqlite.Open(path), &gorm.Config{
+	if DB, err = gorm.Open(sqlite.Open(path+"?cache=shared&mode=rwc&_busy_timeout=50000"), &gorm.Config{
 		NowFunc: func() time.Time { return time.Now().Local() },
 		Logger:  logger.Default.LogMode(logger.Info),
 	}); err != nil {

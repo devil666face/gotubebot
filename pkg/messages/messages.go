@@ -7,6 +7,8 @@ import (
 const (
 	Back   = "Back"
 	GoBack = "Go back"
+	Update = "Update"
+	Delete = "Delete"
 )
 
 const (

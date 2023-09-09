@@ -5,6 +5,8 @@ import (
 	"strings"
 
 	"github.com/Devil666face/gotubebot/pkg/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/keyboards"
+	"github.com/Devil666face/gotubebot/pkg/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/vitaliy-ukiru/fsm-telebot"
 
@@ -64,5 +66,16 @@ func getPermissonHanler(selectorFunc func() ([]models.User, error), next fsm.Han
 		}
 		return nil
 	}
+}
 
+func UserInContextDecorator(next fsm.Handler) fsm.Handler {
+	return func(c telebot.Context, s fsm.Context) error {
+		user := models.User{}
+		if err := user.GetUserByTgID(c.Chat().ID); err != nil {
+			log.Print(err)
+			return c.Send(messages.ErrGetUser, keyboards.MainMenu)
+		}
+		c.Set(callbacks.UserKey, user)
+		return next(c, s)
+	}
 }

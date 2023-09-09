@@ -22,6 +22,7 @@ func Get() (*telebot.Bot, error) {
 	}
 	if err := database.Migrate(
 		&models.Video{},
+		&models.Playlist{},
 		&models.User{},
 	); err != nil {
 		return nil, err

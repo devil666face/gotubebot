@@ -14,6 +14,9 @@ import (
 var callbackMap = map[string]func(telebot.Context, fsm.Context) error{
 	callbacks.ConfirmUser: handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
 	callbacks.IgnoreUser:  handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
+	callbacks.EditVideo:   handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
+	callbacks.UpdateVideo: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdateVideoInlineBtn)),
+	callbacks.DeleteVideo: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeleteVideoInlineBtn)),
 }
 
 type Manager struct {
@@ -24,9 +27,11 @@ func New(manager *Manager) {
 	manager.setMiddelwares()
 	manager.setFreeCommands()
 	manager.setCallbacks()
-	manager.setVideoRoutes()
 
 	manager.Use(handlers.AllowOnlyMiddleware)
+
+	manager.setVideoRoutes()
+	manager.setPlaylistRoutes()
 	manager.Bind(
 		&keyboards.BackBtn,
 		fsm.AnyState,

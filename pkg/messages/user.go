@@ -10,6 +10,7 @@ const (
 	ConfirmUser     = "Add this user"
 	IgnoreUser      = "Ignore this user"
 	ErrGetAdminList = "Failed to get admins list"
+	ErrGetUser      = "Failed to get ower user"
 )
 
 func AskAdminsForAddUser(c telebot.Context) string {
