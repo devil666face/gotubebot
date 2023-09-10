@@ -25,7 +25,7 @@ func (playlist Playlist) String() string {
 }
 
 func (playlist *Playlist) Get(id uint) error {
-	if err := database.DB.First(playlist, id); err != nil {
+	if err := database.DB.Preload("Videos").First(playlist, id); err != nil {
 		return err.Error
 	}
 	return nil

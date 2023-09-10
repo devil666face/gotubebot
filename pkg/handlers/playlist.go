@@ -1,8 +1,7 @@
 package handlers
 
 import (
-	// "fmt"
-
+	"fmt"
 	"log"
 
 	"github.com/Devil666face/gotubebot/pkg/callbacks"
@@ -92,11 +91,29 @@ func OnEditPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 }
 
 func OnShowPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
-	return nil
+	defer delete(c)
+	playlist := models.Playlist{}
+	if err := playlist.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
+		log.Print(err)
+		return c.Send(messages.ErrGetPlaylist, keyboards.MainMenu)
+	}
+	var message string
+	for i, v := range playlist.Videos {
+		message += fmt.Sprintf("%s\n", v)
+		if i%10 == 0 {
+			if err := c.Send(message); err != nil {
+				log.Print(err)
+			}
+			message = ""
+		}
+	}
+	return c.Send(message)
 }
+
 func OnUpdatePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 	return nil
 }
+
 func OnDeletePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 	return nil
 }
