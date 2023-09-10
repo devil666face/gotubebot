@@ -90,3 +90,13 @@ func OnEditPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 	}
 	return c.Send(playlist.String(), keyboards.EditPlaylistInline(playlist.ID))
 }
+
+func OnShowPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
+	return nil
+}
+func OnUpdatePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
+	return nil
+}
+func OnDeletePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
+	return nil
+}
