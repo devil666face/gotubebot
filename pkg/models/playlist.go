@@ -17,7 +17,7 @@ type Playlist struct {
 	Title  string
 	Url    string
 	UserID uint
-	Videos []Video
+	Videos []Video `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 func (playlist Playlist) String() string {
@@ -25,7 +25,24 @@ func (playlist Playlist) String() string {
 }
 
 func (playlist *Playlist) Get(id uint) error {
-	if err := database.DB.Preload("Videos").First(playlist, id); err != nil {
+	if err := database.DB.Preload("Videos").First(playlist, id); err.Error != nil {
+		return err.Error
+	}
+	return nil
+}
+
+func DeletePlaylistWithId(id uint) error {
+	if err := database.DB.Unscoped().Where("playlist_id = ?", id).Delete(&Video{}); err.Error != nil {
+		return err.Error
+	}
+	if err := database.DB.Unscoped().Delete(&Playlist{}, id); err.Error != nil {
+		return err.Error
+	}
+	return nil
+}
+
+func (playlist *Playlist) Create() error {
+	if err := database.DB.Save(playlist); err.Error != nil {
 		return err.Error
 	}
 	return nil
@@ -48,16 +65,9 @@ func (playlist *Playlist) ParseYt() ([]Video, error) {
 	return videos, nil
 }
 
-func (playlist *Playlist) Create() error {
-	if err := database.DB.Save(playlist); err != nil {
-		return err.Error
-	}
-	return nil
-}
-
 func GetAllPlaylistsForUser(id uint) ([]Playlist, error) {
 	var playlists = []Playlist{}
-	if err := database.DB.Where("user_id = ?", id).Find(&playlists); err != nil {
+	if err := database.DB.Where("user_id = ?", id).Find(&playlists); err.Error != nil {
 		return playlists, err.Error
 	}
 	return playlists, nil
