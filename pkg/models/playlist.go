@@ -25,24 +25,28 @@ func (playlist Playlist) String() string {
 }
 
 func (playlist *Playlist) Get(id uint) error {
-	if err := database.DB.Preload("Videos").First(playlist, id); err.Error != nil {
+	if err := database.DB.Preload("Videos").First(playlist, id); err != nil {
 		return err.Error
 	}
 	return nil
 }
 
-func DeletePlaylistWithId(id uint) error {
-	if err := database.DB.Unscoped().Where("playlist_id = ?", id).Delete(&Video{}); err.Error != nil {
-		return err.Error
-	}
-	if err := database.DB.Unscoped().Delete(&Playlist{}, id); err.Error != nil {
+func (playlist *Playlist) Delete() error {
+	if err := database.DB.Unscoped().Delete(playlist); err != nil {
 		return err.Error
 	}
 	return nil
+}
+
+func (playlist *Playlist) CascadeDelete() error {
+	if err := database.DB.Unscoped().Where("playlist_id = ?", playlist.ID).Delete(&Video{}); err.Error != nil {
+		return err.Error
+	}
+	return playlist.Delete()
 }
 
 func (playlist *Playlist) Create() error {
-	if err := database.DB.Save(playlist); err.Error != nil {
+	if err := database.DB.Save(playlist); err != nil {
 		return err.Error
 	}
 	return nil
@@ -67,7 +71,7 @@ func (playlist *Playlist) ParseYt() ([]Video, error) {
 
 func GetAllPlaylistsForUser(id uint) ([]Playlist, error) {
 	var playlists = []Playlist{}
-	if err := database.DB.Where("user_id = ?", id).Find(&playlists); err.Error != nil {
+	if err := database.DB.Where("user_id = ?", id).Find(&playlists); err != nil {
 		return playlists, err.Error
 	}
 	return playlists, nil

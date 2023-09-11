@@ -81,21 +81,17 @@ func OnRecivePlaylistUrl(c telebot.Context, s fsm.Context) error {
 }
 
 func OnEditPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
-	playlist := models.Playlist{}
-	if err := playlist.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
-		log.Print(err)
-		return c.Send(messages.ErrGetPlaylist, keyboards.PlaylistMenu)
+	playlist, err := callbackWithPlaylist(c)
+	if err != nil {
+		return err
 	}
 	return c.Send(playlist.String(), keyboards.EditPlaylistInline(playlist.ID))
 }
 
 func OnShowPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
-	playlist := models.Playlist{}
-	if err := playlist.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
-		log.Print(err)
-		return c.Send(messages.ErrGetPlaylist, keyboards.PlaylistMenu)
+	playlist, err := callbackWithPlaylist(c)
+	if err != nil {
+		return err
 	}
 	var message string
 	for i, v := range playlist.Videos {
@@ -115,10 +111,23 @@ func OnUpdatePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 }
 
 func OnDeletePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
-	if err := models.DeletePlaylistWithId(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
+	playlist, err := callbackWithPlaylist(c)
+	if err != nil {
+		return err
+	}
+	if err := playlist.CascadeDelete(); err != nil {
 		log.Print(err)
 		return c.Send(messages.ErrDeletePlaylist, keyboards.PlaylistMenu)
 	}
 	return c.Send(messages.SuccessfulDeletePlaylist, keyboards.PlaylistMenu)
+}
+
+func callbackWithPlaylist(c telebot.Context) (models.Playlist, error) {
+	defer delete(c)
+	playlist := models.Playlist{}
+	if err := playlist.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
+		log.Print(err)
+		return playlist, c.Send(messages.ErrGetPlaylist, keyboards.PlaylistMenu)
+	}
+	return playlist, nil
 }
