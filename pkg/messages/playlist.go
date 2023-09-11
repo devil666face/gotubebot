@@ -4,7 +4,7 @@ const (
 	CreatePlaylist           = "Create playlist"
 	ChangePlaylist           = "Change playlist"
 	PlaylistList             = "All playlists"
-	SendPlaylistUrl          = "Send url to playlist"
+	SendPlaylistURL          = "Send url to playlist"
 	ShowPlaylist             = "Show videos"
 	UpdatePlaylist           = "Update videos loaded links"
 	SuccessfulDeletePlaylist = "Successful delete playlist"

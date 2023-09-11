@@ -38,17 +38,17 @@ func VideoListInline(videos []models.Video) *telebot.ReplyMarkup {
 }
 
 func UpdateOrDeleteVideoInline(id uint) *telebot.ReplyMarkup {
-	update := telebot.InlineButton{
+	updateBtn := telebot.InlineButton{
 		Text:   messages.Update,
 		Unique: fmt.Sprintf("%s:%d", callbacks.UpdateVideo, id),
 	}
-	delete := telebot.InlineButton{
+	deleteBtn := telebot.InlineButton{
 		Text:   messages.Delete,
 		Unique: fmt.Sprintf("%s:%d", callbacks.DeleteVideo, id),
 	}
 	return &telebot.ReplyMarkup{
 		InlineKeyboard: [][]telebot.InlineButton{
-			{update, delete},
+			{updateBtn, deleteBtn},
 		},
 		ResizeKeyboard: true,
 	}

@@ -15,14 +15,14 @@ import (
 type Video struct {
 	gorm.Model
 	Title       string
-	Url         string
-	DownloadUrl string
+	URL         string
+	DownloadURL string
 	UserID      uint
 	PlaylistID  uint
 }
 
 func (video Video) String() string {
-	return fmt.Sprintf("<a href='%s'>%s</a>\n<a href='%s'>Download</a>", video.Url, video.Title, video.DownloadUrl)
+	return fmt.Sprintf("<a href='%s'>%s</a>\n<a href='%s'>Download</a>", video.URL, video.Title, video.DownloadURL)
 }
 
 func (video *Video) Get(id uint) error {
@@ -54,12 +54,12 @@ func (video *Video) Delete() error {
 }
 
 func (video *Video) ParseYt() error {
-	title, downloadUrl, err := utils.VideoInfo(video.Url)
+	title, downloadURL, err := utils.VideoInfo(video.URL)
 	if err != nil {
 		return err
 	}
 	video.Title = title
-	video.DownloadUrl = downloadUrl
+	video.DownloadURL = downloadURL
 	return nil
 }
 

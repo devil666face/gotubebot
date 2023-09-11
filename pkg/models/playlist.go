@@ -15,13 +15,13 @@ import (
 type Playlist struct {
 	gorm.Model
 	Title  string
-	Url    string
+	URL    string
 	UserID uint
 	Videos []Video `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 func (playlist Playlist) String() string {
-	return fmt.Sprintf("<a href='%s'>%s</a>", playlist.Url, playlist.Title)
+	return fmt.Sprintf("<a href='%s'>%s</a>", playlist.URL, playlist.Title)
 }
 
 func (playlist *Playlist) Get(id uint) error {
@@ -54,7 +54,7 @@ func (playlist *Playlist) Create() error {
 
 func (playlist *Playlist) ParseYt() ([]Video, error) {
 	videos := []Video{}
-	title, videoUrls, err := utils.PlaylistInfo(playlist.Url)
+	title, videoUrls, err := utils.PlaylistInfo(playlist.URL)
 	if err != nil {
 		return videos, err
 	}
@@ -62,7 +62,7 @@ func (playlist *Playlist) ParseYt() ([]Video, error) {
 
 	for _, href := range videoUrls {
 		videos = append(videos, Video{
-			Url:    href,
+			URL:    href,
 			UserID: playlist.UserID,
 		})
 	}

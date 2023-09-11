@@ -43,23 +43,23 @@ func PlaylistsInline(playlists []models.Playlist) *telebot.ReplyMarkup {
 }
 
 func EditPlaylistInline(id uint) *telebot.ReplyMarkup {
-	show := telebot.InlineButton{
+	showBtn := telebot.InlineButton{
 		Text:   messages.ShowPlaylist,
 		Unique: fmt.Sprintf("%s:%d", callbacks.ShowPlaylist, id),
 	}
-	update := telebot.InlineButton{
+	updateBtn := telebot.InlineButton{
 		Text:   messages.UpdatePlaylist,
 		Unique: fmt.Sprintf("%s:%d", callbacks.UpdatePlaylist, id),
 	}
-	delete := telebot.InlineButton{
+	deleteBtn := telebot.InlineButton{
 		Text:   messages.Delete,
 		Unique: fmt.Sprintf("%s:%d", callbacks.DeletePlaylist, id),
 	}
 	return &telebot.ReplyMarkup{
 		InlineKeyboard: [][]telebot.InlineButton{
-			{show},
-			{update},
-			{delete},
+			{showBtn},
+			{updateBtn},
+			{deleteBtn},
 		},
 		ResizeKeyboard: true,
 	}

@@ -27,7 +27,7 @@ func PlaylistInfo(href string) (string, []string, error) {
 	}
 
 	for _, v := range playlist.Videos {
-		videoUrls = append(videoUrls, toYtUrl(v.ID))
+		videoUrls = append(videoUrls, toYtURL(v.ID))
 	}
 
 	return playlist.Title, videoUrls, nil

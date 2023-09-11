@@ -10,5 +10,5 @@ import (
 func (manager *Manager) setPlaylistRoutes() {
 	manager.Bind(&keyboards.PlaylistsBtn, fsm.AnyState, handlers.UserInContextDecorator(handlers.OnPlaylistsBtn))
 	manager.Bind(&keyboards.CreatePlaylistBtn, fsm.AnyState, handlers.OnCreatePlaylistBtn)
-	manager.Bind(telebot.OnText, handlers.CreatePlaylistState, handlers.UserInContextDecorator(handlers.OnRecivePlaylistUrl))
+	manager.Bind(telebot.OnText, handlers.CreatePlaylistState, handlers.UserInContextDecorator(handlers.OnRecivePlaylistURL))
 }
