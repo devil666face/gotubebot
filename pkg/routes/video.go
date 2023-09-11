@@ -8,7 +8,7 @@ import (
 )
 
 func (manager *Manager) setVideoRoutes() {
-	manager.Bind(&keyboards.VideosBtn, fsm.AnyState, handlers.UserInContextDecorator(handlers.OnVideosBtn))
+	manager.Bind(&keyboards.VideosBtn, fsm.AnyState, handlers.UserInCtxDecorator(handlers.OnVideosBtn))
 	manager.Bind(&keyboards.CreateVideoBtn, fsm.AnyState, handlers.OnCreateVideoBtn)
-	manager.Bind(telebot.OnText, handlers.CreateVideoState, handlers.UserInContextDecorator(handlers.OnReciveVideoURL))
+	manager.Bind(telebot.OnText, handlers.CreateVideoState, handlers.UserInCtxDecorator(handlers.OnReciveVideoURL))
 }

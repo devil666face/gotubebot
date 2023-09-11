@@ -15,12 +15,12 @@ var callbackMap = map[string]func(telebot.Context, fsm.Context) error{
 	callbacks.ConfirmUser:    handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
 	callbacks.IgnoreUser:     handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
 	callbacks.EditVideo:      handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
-	callbacks.UpdateVideo:    handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdateVideoInlineBtn)),
-	callbacks.DeleteVideo:    handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeleteVideoInlineBtn)),
+	callbacks.UpdateVideo:    handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnUpdateVideoInlineBtn)),
+	callbacks.DeleteVideo:    handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeleteVideoInlineBtn)),
 	callbacks.EditPlaylist:   handlers.AllowOnlyDecorator(handlers.OnEditPlaylistInlineBtn),
 	callbacks.ShowPlaylist:   handlers.AllowOnlyDecorator(handlers.OnShowPlaylistInlineBtn),
-	callbacks.UpdatePlaylist: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdatePlaylistInlineBtn)),
-	callbacks.DeletePlaylist: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeletePlaylistInlineBtn)),
+	callbacks.UpdatePlaylist: handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnUpdatePlaylistInlineBtn)),
+	callbacks.DeletePlaylist: handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeletePlaylistInlineBtn)),
 }
 
 type Manager struct {
@@ -40,7 +40,6 @@ func New(manager *Manager) {
 		&keyboards.BackBtn,
 		fsm.AnyState,
 		handlers.OnBackBtn,
-		handlers.AllowOnlyMiddleware,
 	)
 }
 
