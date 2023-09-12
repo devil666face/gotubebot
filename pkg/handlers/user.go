@@ -12,7 +12,7 @@ import (
 )
 
 func OnConfirmUser(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
+	defer delMes(c)
 	id := utils.ToInt64(c.Get(callbacks.CallbackVal))
 	user := models.User{}
 	if notfound := user.GetUserByTgID(id); notfound != nil {

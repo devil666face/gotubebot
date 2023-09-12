@@ -21,8 +21,8 @@ air: ## Run dev server
 .PHONY: lint
 lint: ## Run linter
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ~/go/bin v1.54.2
-	~/go/bin/golangci-lint run
 	~/go/bin/golangci-lint run --deadline=30m --enable=misspell --enable=gosec --enable=gofmt --enable=goimports --enable=revive 
+	~/go/bin/golangci-lint run
 
 .PHONY: help
 help: ## Prints help for targets with comments

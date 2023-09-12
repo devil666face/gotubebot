@@ -9,17 +9,17 @@ import (
 )
 
 func InlineAddUser(id int64) *telebot.ReplyMarkup {
-	confirm := telebot.InlineButton{
+	confirmBtn := telebot.InlineButton{
 		Text:   messages.ConfirmUser,
 		Unique: fmt.Sprintf("%s:%d", callbacks.ConfirmUser, id),
 	}
-	ignore := telebot.InlineButton{
+	ignoreBtn := telebot.InlineButton{
 		Text:   messages.IgnoreUser,
 		Unique: fmt.Sprintf("%s:%d", callbacks.IgnoreUser, id),
 	}
 	return &telebot.ReplyMarkup{
 		InlineKeyboard: [][]telebot.InlineButton{
-			{confirm, ignore},
+			{confirmBtn, ignoreBtn},
 		},
 		ResizeKeyboard: true,
 	}

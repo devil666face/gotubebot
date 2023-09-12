@@ -16,6 +16,6 @@ func ValidateYtURL(href string) error {
 	return nil
 }
 
-func toYtUrl(vid string) string {
+func toYtURL(vid string) string {
 	return fmt.Sprintf("%s%s", YtURL, vid)
 }

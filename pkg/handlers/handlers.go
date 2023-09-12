@@ -11,7 +11,7 @@ import (
 	telebot "gopkg.in/telebot.v3"
 )
 
-func delete(c telebot.Context) {
+func delMes(c telebot.Context) {
 	if err := c.Delete(); err != nil {
 		log.Print(err)
 	}
@@ -45,7 +45,7 @@ func askAdmins(c telebot.Context) {
 	}
 }
 
-func OnStartCommand(c telebot.Context, s fsm.Context) error {
+func OnStartCommand(c telebot.Context, _ fsm.Context) error {
 	user := models.User{}
 	if notfound := user.GetUserByTgID(c.Chat().ID); notfound != nil {
 		user = models.User{

@@ -1,6 +1,6 @@
 module github.com/Devil666face/gotubebot
 
-go 1.21.0
+go 1.20
 
 require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0

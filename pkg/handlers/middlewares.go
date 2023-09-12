@@ -68,7 +68,7 @@ func getPermissonHanler(selectorFunc func() ([]models.User, error), next fsm.Han
 	}
 }
 
-func UserInContextDecorator(next fsm.Handler) fsm.Handler {
+func UserInCtxDecorator(next fsm.Handler) fsm.Handler {
 	return func(c telebot.Context, s fsm.Context) error {
 		user := models.User{}
 		if err := user.GetUserByTgID(c.Chat().ID); err != nil {

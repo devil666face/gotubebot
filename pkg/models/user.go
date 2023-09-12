@@ -22,7 +22,7 @@ func (user User) String() string {
 }
 
 func (user *User) Get(id uint) error {
-	if err := database.DB.First(user, id); err.Error != nil {
+	if err := database.DB.First(user, id); err != nil {
 		return err.Error
 	}
 	return nil
@@ -37,14 +37,14 @@ func (user *User) GetUserByTgID(id int64) error {
 }
 
 func (user *User) Create() error {
-	if err := database.DB.Save(user); err.Error != nil {
+	if err := database.DB.Save(user); err != nil {
 		return err.Error
 	}
 	return nil
 }
 
 func (user *User) Update() error {
-	if err := database.DB.Save(user); err.Error != nil {
+	if err := database.DB.Save(user); err != nil {
 		return err.Error
 	}
 	return nil
@@ -53,7 +53,7 @@ func (user *User) Update() error {
 func getUsersForSelect(query string) ([]User, error) {
 	var users = []User{}
 	err := database.DB.Where(query, true).Find(&users)
-	if err.Error != nil {
+	if err != nil {
 		users = append(users, User{TGID: config.Cfg.SuperuserID})
 		return users, err.Error
 	}

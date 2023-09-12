@@ -34,10 +34,10 @@ func OnVideosBtn(c telebot.Context, _ fsm.Context) error {
 
 func OnCreateVideoBtn(c telebot.Context, s fsm.Context) error {
 	defer setState(s, CreateVideoState)
-	return c.Send(messages.SendVideoUrl, keyboards.BackMenu)
+	return c.Send(messages.SendVideoURL, keyboards.BackMenu)
 }
 
-func OnReciveVideoUrl(c telebot.Context, s fsm.Context) error {
+func OnReciveVideoURL(c telebot.Context, s fsm.Context) error {
 	if err := utils.ValidateYtURL(c.Message().Text); err != nil {
 		return c.Send(messages.ErrParseYtURL)
 	}
@@ -46,7 +46,7 @@ func OnReciveVideoUrl(c telebot.Context, s fsm.Context) error {
 	user := c.Get(callbacks.UserKey).(models.User)
 
 	video := models.Video{
-		Url:    c.Message().Text,
+		URL:    c.Message().Text,
 		UserID: user.ID,
 	}
 
@@ -60,7 +60,7 @@ func OnReciveVideoUrl(c telebot.Context, s fsm.Context) error {
 }
 
 func OnEditVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
+	defer delMes(c)
 	video := models.Video{}
 	if err := video.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
 		log.Print(err)
@@ -70,7 +70,7 @@ func OnEditVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
 }
 
 func OnUpdateVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
+	defer delMes(c)
 	video := models.Video{}
 	if err := video.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
 		return c.Send(messages.ErrGetVideo, keyboards.MainMenu)
@@ -85,7 +85,7 @@ func OnUpdateVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
 }
 
 func OnDeleteVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delete(c)
+	defer delMes(c)
 	video := models.Video{}
 	if err := video.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
 		return c.Send(messages.ErrGetVideo, keyboards.MainMenu)
