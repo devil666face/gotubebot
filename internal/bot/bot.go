@@ -3,9 +3,9 @@ package bot
 import (
 	"time"
 
+	"github.com/Devil666face/gotubebot/pkg/bot/routes"
 	"github.com/Devil666face/gotubebot/pkg/config"
 	"github.com/Devil666face/gotubebot/pkg/models"
-	"github.com/Devil666face/gotubebot/pkg/routes"
 	"github.com/Devil666face/gotubebot/pkg/store/database"
 	"github.com/Devil666face/gotubebot/pkg/store/mem"
 	"github.com/vitaliy-ukiru/fsm-telebot"

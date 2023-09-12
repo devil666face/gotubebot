@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Devil666face/gotubebot/internal/bot"
+	"github.com/Devil666face/gotubebot/internal/updater"
 
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -13,5 +14,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	go updater.Start()
 	bot.Start()
 }

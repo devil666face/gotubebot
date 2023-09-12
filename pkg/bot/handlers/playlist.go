@@ -5,9 +5,9 @@ import (
 	"log"
 	"sync"
 
-	"github.com/Devil666face/gotubebot/pkg/callbacks"
-	"github.com/Devil666face/gotubebot/pkg/keyboards"
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/Devil666face/gotubebot/pkg/utils"
 
@@ -151,6 +151,23 @@ func OnDeletePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 		return c.Send(messages.ErrDeletePlaylist, keyboards.PlaylistMenu)
 	}
 	return c.Send(messages.SuccessfulDeletePlaylist, keyboards.PlaylistMenu)
+}
+
+func OnGenScriptPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
+	playlist, err := callbackWithPlaylist(c)
+	if err != nil {
+		return err
+	}
+	fileName, err := playlist.GetScriptDownloadFile()
+	if err != nil {
+		return c.Send(messages.ErrGenPlaylistScript, keyboards.PlaylistMenu)
+	}
+	f := &telebot.Document{
+		File:     telebot.FromDisk(fileName),
+		FileName: fileName,
+	}
+	defer utils.Remove(f.FileName)
+	return c.Send(f, keyboards.PlaylistMenu)
 }
 
 func callbackWithPlaylist(c telebot.Context) (models.Playlist, error) {

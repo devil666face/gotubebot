@@ -69,6 +69,18 @@ func (playlist *Playlist) ParseYt() ([]Video, error) {
 	return videos, nil
 }
 
+func (playlist *Playlist) GetScriptDownloadFile() (string, error) {
+	lines := []string{utils.GetBachString()}
+	for _, v := range playlist.Videos {
+		lines = append(lines, utils.GetWgetString(v.Title, v.DownloadURL))
+	}
+	name, err := utils.WriteFile(playlist.Title, lines)
+	if err != nil {
+		return "", err
+	}
+	return name, nil
+}
+
 func GetAllPlaylistsForUser(id uint) ([]Playlist, error) {
 	var playlists = []Playlist{}
 	if err := database.DB.Where("user_id = ?", id).Find(&playlists); err != nil {

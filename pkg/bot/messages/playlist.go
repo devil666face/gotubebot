@@ -6,9 +6,10 @@ const (
 	PlaylistList             = "All playlists"
 	SendPlaylistURL          = "Send url to playlist"
 	ShowPlaylist             = "Show videos"
-	UpdatePlaylist           = "Update videos loaded links"
+	GenScriptPlaylist        = "Get download script"
 	SuccessfulDeletePlaylist = "Successful delete playlist"
 	ErrLoadPlaylistFromYt    = "Error to load playlist"
 	ErrGetPlaylist           = "Error when get playlist"
 	ErrDeletePlaylist        = "Error delete playlist"
+	ErrGenPlaylistScript     = "Error make download playlist script"
 )

@@ -1,7 +1,7 @@
 package keyboards
 
 import (
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"gopkg.in/telebot.v3"
 )
 

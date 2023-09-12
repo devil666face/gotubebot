@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/Devil666face/gotubebot/pkg/handlers"
-	"github.com/Devil666face/gotubebot/pkg/keyboards"
+	"github.com/Devil666face/gotubebot/pkg/bot/handlers"
+	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
 	"github.com/vitaliy-ukiru/fsm-telebot"
 	"gopkg.in/telebot.v3"
 )

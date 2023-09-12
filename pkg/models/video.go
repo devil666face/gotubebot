@@ -70,3 +70,11 @@ func GetAllVideosForUser(id uint) ([]Video, error) {
 	}
 	return videos, nil
 }
+
+func GetAllExpireVideos() ([]Video, error) {
+	var videos = []Video{}
+	if err := database.DB.Where("updated_at < ?", utils.GetOneHourAgo()).Find(&videos); err != nil {
+		return videos, err.Error
+	}
+	return videos, nil
+}

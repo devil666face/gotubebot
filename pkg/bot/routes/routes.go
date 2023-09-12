@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"github.com/Devil666face/gotubebot/pkg/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/handlers"
+	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
 	"github.com/Devil666face/gotubebot/pkg/config"
-	"github.com/Devil666face/gotubebot/pkg/handlers"
-	"github.com/Devil666face/gotubebot/pkg/keyboards"
 
 	"github.com/vitaliy-ukiru/fsm-telebot"
 	telebot "gopkg.in/telebot.v3"
@@ -12,14 +12,15 @@ import (
 )
 
 var callbackMap = map[string]func(telebot.Context, fsm.Context) error{
-	callbacks.ConfirmUser:    handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
-	callbacks.IgnoreUser:     handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
-	callbacks.EditVideo:      handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
-	callbacks.UpdateVideo:    handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnUpdateVideoInlineBtn)),
-	callbacks.DeleteVideo:    handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeleteVideoInlineBtn)),
-	callbacks.EditPlaylist:   handlers.AllowOnlyDecorator(handlers.OnEditPlaylistInlineBtn),
-	callbacks.ShowPlaylist:   handlers.AllowOnlyDecorator(handlers.OnShowPlaylistInlineBtn),
-	callbacks.DeletePlaylist: handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeletePlaylistInlineBtn)),
+	callbacks.ConfirmUser:       handlers.AdminOnlyDecorator(handlers.OnConfirmUser),
+	callbacks.IgnoreUser:        handlers.AdminOnlyDecorator(handlers.OnIgnoreUser),
+	callbacks.EditVideo:         handlers.AllowOnlyDecorator(handlers.OnEditVideoInlineBtn),
+	callbacks.UpdateVideo:       handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnUpdateVideoInlineBtn)),
+	callbacks.DeleteVideo:       handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeleteVideoInlineBtn)),
+	callbacks.EditPlaylist:      handlers.AllowOnlyDecorator(handlers.OnEditPlaylistInlineBtn),
+	callbacks.ShowPlaylist:      handlers.AllowOnlyDecorator(handlers.OnShowPlaylistInlineBtn),
+	callbacks.GenScriptPlaylist: handlers.AllowOnlyDecorator(handlers.OnGenScriptPlaylistInlineBtn),
+	callbacks.DeletePlaylist:    handlers.AllowOnlyDecorator(handlers.UserInCtxDecorator(handlers.OnDeletePlaylistInlineBtn)),
 }
 
 type Manager struct {

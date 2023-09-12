@@ -3,8 +3,8 @@ package handlers
 import (
 	"log"
 
-	"github.com/Devil666face/gotubebot/pkg/keyboards"
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/vitaliy-ukiru/fsm-telebot"
 

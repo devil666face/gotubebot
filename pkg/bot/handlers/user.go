@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/Devil666face/gotubebot/pkg/callbacks"
-	"github.com/Devil666face/gotubebot/pkg/keyboards"
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/Devil666face/gotubebot/pkg/utils"
 

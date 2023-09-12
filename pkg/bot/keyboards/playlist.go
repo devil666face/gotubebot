@@ -1,16 +1,12 @@
 package keyboards
 
 import (
-	// "fmt"
-
-	// "github.com/Devil666face/gotubebot/pkg/callbacks"
 	"fmt"
 
-	"github.com/Devil666face/gotubebot/pkg/callbacks"
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
 
-	// "github.com/Devil666face/gotubebot/pkg/models"
 	"gopkg.in/telebot.v3"
 )
 
@@ -47,6 +43,10 @@ func EditPlaylistInline(id uint) *telebot.ReplyMarkup {
 		Text:   messages.ShowPlaylist,
 		Unique: fmt.Sprintf("%s:%d", callbacks.ShowPlaylist, id),
 	}
+	scriptBtn := telebot.InlineButton{
+		Text:   messages.GenScriptPlaylist,
+		Unique: fmt.Sprintf("%s:%d", callbacks.GenScriptPlaylist, id),
+	}
 	deleteBtn := telebot.InlineButton{
 		Text:   messages.Delete,
 		Unique: fmt.Sprintf("%s:%d", callbacks.DeletePlaylist, id),
@@ -54,6 +54,7 @@ func EditPlaylistInline(id uint) *telebot.ReplyMarkup {
 	return &telebot.ReplyMarkup{
 		InlineKeyboard: [][]telebot.InlineButton{
 			{showBtn},
+			{scriptBtn},
 			{deleteBtn},
 		},
 		ResizeKeyboard: true,

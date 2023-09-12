@@ -3,8 +3,8 @@ package keyboards
 import (
 	"fmt"
 
-	"github.com/Devil666face/gotubebot/pkg/callbacks"
-	"github.com/Devil666face/gotubebot/pkg/messages"
+	"github.com/Devil666face/gotubebot/pkg/bot/callbacks"
+	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"gopkg.in/telebot.v3"
 )
 
