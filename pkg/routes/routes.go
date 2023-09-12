@@ -19,7 +19,6 @@ var callbackMap = map[string]func(telebot.Context, fsm.Context) error{
 	callbacks.DeleteVideo:    handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeleteVideoInlineBtn)),
 	callbacks.EditPlaylist:   handlers.AllowOnlyDecorator(handlers.OnEditPlaylistInlineBtn),
 	callbacks.ShowPlaylist:   handlers.AllowOnlyDecorator(handlers.OnShowPlaylistInlineBtn),
-	callbacks.UpdatePlaylist: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnUpdatePlaylistInlineBtn)),
 	callbacks.DeletePlaylist: handlers.AllowOnlyDecorator(handlers.UserInContextDecorator(handlers.OnDeletePlaylistInlineBtn)),
 }
 

@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"log"
+	"sync"
 
 	"github.com/Devil666face/gotubebot/pkg/callbacks"
 	"github.com/Devil666face/gotubebot/pkg/keyboards"
@@ -61,23 +62,57 @@ func OnRecivePlaylistUrl(c telebot.Context, s fsm.Context) error {
 		log.Print(err)
 		return c.Send(messages.ErrLoadPlaylistFromYt, keyboards.PlaylistMenu)
 	}
+	if err := c.Send(playlist.String(), keyboards.PlaylistMenu); err != nil {
+		log.Print(err)
+	}
 
-	for _, video := range videos {
-		go func(c telebot.Context, video models.Video) error {
-			if err := video.ParseYt(); err != nil {
-				log.Print(err)
-				return c.Send(messages.ErrParseYtURL)
-			}
-			video.PlaylistID = playlist.ID
-			if err := video.Create(); err != nil {
+	videoChan := make(chan models.Video)
+
+	go func() {
+		wg := sync.WaitGroup{}
+		for _, video := range videos {
+			wg.Add(1)
+			go func(video models.Video) error {
+				defer wg.Done()
+				if err := video.ParseYt(); err != nil {
+					log.Print(err)
+					return c.Send(messages.ErrParseYtURL)
+				}
+				videoChan <- video
+				return nil
+			}(video)
+		}
+		wg.Wait()
+		close(videoChan)
+	}()
+
+	for v := range videoChan {
+		go func(v models.Video) error {
+			v.PlaylistID = playlist.ID
+			if err := v.Create(); err != nil {
 				log.Print(err)
 				return c.Send(messages.ErrLoadVideoFromYt)
 			}
-			return c.Send(video.String())
-		}(c, video)
+			return c.Send(v.String())
+		}(v)
 	}
 
-	return c.Send(playlist.String(), keyboards.PlaylistMenu)
+	// for _, video := range videos {
+	// 	go func(c telebot.Context, video models.Video) error {
+	// 		if err := video.ParseYt(); err != nil {
+	// 			log.Print(err)
+	// 			return c.Send(messages.ErrParseYtURL)
+	// 		}
+	// 		video.PlaylistID = playlist.ID
+	// 		if err := video.Create(); err != nil {
+	// 			log.Print(err)
+	// 			return c.Send(messages.ErrLoadVideoFromYt)
+	// 		}
+	// 		return c.Send(video.String())
+	// 	}(c, video)
+	// }
+	return nil
+	// return c.Send(playlist.String(), keyboards.PlaylistMenu)
 }
 
 func OnEditPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
@@ -108,10 +143,6 @@ func OnShowPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 		}
 	}
 	return c.Send(message)
-}
-
-func OnUpdatePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
-	return nil
 }
 
 func OnDeletePlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
