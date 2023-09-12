@@ -1,13 +1,10 @@
 package models
 
 import (
-	// "errors"
 	"fmt"
-	// "log"
 
-	"github.com/Devil666face/gotubebot/pkg/utils"
-	// "github.com/Devil666face/gotubebot/pkg/config"
 	"github.com/Devil666face/gotubebot/pkg/store/database"
+	"github.com/Devil666face/gotubebot/pkg/utils"
 
 	"gorm.io/gorm"
 )

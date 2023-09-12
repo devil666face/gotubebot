@@ -51,6 +51,7 @@ func OnReciveVideoURL(c telebot.Context, s fsm.Context) error {
 	}
 
 	if err := video.ParseYt(); err != nil {
+		log.Print(err)
 		return c.Send(messages.ErrLoadVideoFromYt, keyboards.VideoMenu)
 	}
 	if err := video.Create(); err != nil {
