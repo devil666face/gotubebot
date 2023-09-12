@@ -69,21 +69,6 @@ func OnEditVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
 	return c.Send(video.String(), keyboards.UpdateOrDeleteVideoInline(video.ID))
 }
 
-func OnUpdateVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
-	defer delMes(c)
-	video := models.Video{}
-	if err := video.Get(utils.ToUint(c.Get(callbacks.CallbackVal))); err != nil {
-		return c.Send(messages.ErrGetVideo, keyboards.MainMenu)
-	}
-	if err := video.ParseYt(); err != nil {
-		return c.Send(messages.ErrLoadVideoFromYt, keyboards.VideoMenu)
-	}
-	if err := video.Update(); err != nil {
-		log.Print(err)
-	}
-	return inlineVideosForUser(c)
-}
-
 func OnDeleteVideoInlineBtn(c telebot.Context, _ fsm.Context) error {
 	defer delMes(c)
 	video := models.Video{}
