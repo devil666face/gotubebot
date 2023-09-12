@@ -33,7 +33,7 @@ func genSciprtFile(lines []string) string {
 
 func WriteFile(name string, lines []string) (string, error) {
 	name += ".sh"
-	if err := os.WriteFile(getValidFileName(name), []byte(genSciprtFile(lines)), 0666); err != nil {
+	if err := os.WriteFile(getValidFileName(name), []byte(genSciprtFile(lines)), 0600); err != nil {
 		fmt.Println(lines)
 		return name, err
 	}
