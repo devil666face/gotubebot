@@ -6,6 +6,7 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
 	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
+	"github.com/Devil666face/gotubebot/pkg/utils"
 	"github.com/vitaliy-ukiru/fsm-telebot"
 
 	telebot "gopkg.in/telebot.v3"
@@ -65,6 +66,23 @@ func OnStartCommand(c telebot.Context, _ fsm.Context) error {
 	return c.Send(
 		messages.ErrUserAlreadyCreate(c), keyboards.MainMenu,
 	)
+}
+
+func OnText(c telebot.Context, s fsm.Context) error {
+	if err := utils.ValidateYtURL(c.Message().Text); err != nil {
+		return c.Send(messages.ErrParseYtURL)
+	}
+	defer finish(s)
+
+	video := models.Video{
+		URL: c.Message().Text,
+	}
+
+	if err := video.ParseYt(); err != nil {
+		log.Print(err)
+		return c.Send(messages.ErrLoadVideoFromYt, keyboards.VideoMenu)
+	}
+	return c.Send(video.String(), keyboards.VideoMenu)
 }
 
 func OnBackBtn(c telebot.Context, s fsm.Context) error {

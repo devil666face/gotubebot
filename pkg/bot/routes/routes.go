@@ -32,9 +32,9 @@ func New(manager *Manager) {
 	manager.setCallbacks()
 
 	manager.Use(handlers.AllowOnlyMiddleware)
-
 	manager.setVideoRoutes()
 	manager.setPlaylistRoutes()
+	manager.Bind(telebot.OnText, fsm.AnyState, handlers.OnText)
 	manager.Bind(
 		&keyboards.BackBtn,
 		fsm.AnyState,
