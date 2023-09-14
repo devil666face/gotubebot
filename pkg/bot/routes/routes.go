@@ -6,7 +6,7 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
 	"github.com/Devil666face/gotubebot/pkg/config"
 
-	"github.com/vitaliy-ukiru/fsm-telebot"
+	"github.com/vitaliy-ukiru/fsm-telebot" //nolint:misspell
 	telebot "gopkg.in/telebot.v3"
 	"gopkg.in/telebot.v3/middleware"
 )

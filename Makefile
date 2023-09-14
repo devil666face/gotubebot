@@ -1,3 +1,8 @@
+PROJECT_DIR = $(shell pwd)
+PROJECT_BIN = $(PROJECT_DIR)/bin
+$(shell [ -f bin ] || mkdir -p $(PROJECT_BIN))
+PATH := $(PROJECT_BIN):$(PATH)
+GOLANGCI_LINT = $(PROJECT_BIN)/golangci-lint
 GOOS=linux
 GOARCH=amd64
 CGO_ENABLED=1
@@ -16,13 +21,16 @@ run: ## Run project
 .PHONY: air
 air: ## Run dev server
 	go install github.com/cosmtrek/air@latest
-	~/go/bin/air
+	$(GOPATH)/bin/air
+
+.PHONY: .install-linter
+.install-linter: # Install linter
+	[ -f $(PROJECT_BIN)/golangci-lint ] || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(PROJECT_BIN) v1.54.2
 
 .PHONY: lint
-lint: ## Run linter
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ~/go/bin v1.54.2
-	~/go/bin/golangci-lint run --deadline=30m --enable=misspell --enable=gosec --enable=gofmt --enable=goimports --enable=revive 
-	~/go/bin/golangci-lint run
+lint: .install-linter # Run linter
+	$(GOLANGCI_LINT) run ./... --deadline=30m --enable=misspell --enable=gosec --enable=gofmt --enable=goimports --enable=revive 
+
 
 .PHONY: help
 help: ## Prints help for targets with comments

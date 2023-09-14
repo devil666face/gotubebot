@@ -11,7 +11,7 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/Devil666face/gotubebot/pkg/utils"
 
-	"github.com/vitaliy-ukiru/fsm-telebot"
+	"github.com/vitaliy-ukiru/fsm-telebot" //nolint:misspell
 	telebot "gopkg.in/telebot.v3"
 )
 
@@ -80,7 +80,7 @@ func OnRecivePlaylistURL(c telebot.Context, s fsm.Context) error {
 				}
 				videoChan <- video
 				return nil
-			}(video)
+			}(video) //nolint:errcheck
 		}
 		wg.Wait()
 		close(videoChan)
@@ -94,7 +94,7 @@ func OnRecivePlaylistURL(c telebot.Context, s fsm.Context) error {
 				return c.Send(messages.ErrLoadVideoFromYt)
 			}
 			return c.Send(v.String())
-		}(v)
+		}(v) //nolint:errcheck
 	}
 
 	// for _, video := range videos {

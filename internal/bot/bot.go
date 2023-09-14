@@ -8,7 +8,7 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/models"
 	"github.com/Devil666face/gotubebot/pkg/store/database"
 	"github.com/Devil666face/gotubebot/pkg/store/mem"
-	"github.com/vitaliy-ukiru/fsm-telebot"
+	"github.com/vitaliy-ukiru/fsm-telebot" //nolint:misspell
 
 	telebot "gopkg.in/telebot.v3"
 )
@@ -46,7 +46,7 @@ func newBot() (*telebot.Bot, error) {
 }
 
 func newFsmManager(bot *telebot.Bot) *routes.Manager {
-	return &routes.Manager{
+	return &routes.Manager{ //nolint:govet
 		fsm.NewManager(bot, nil, mem.New(), nil),
 	}
 }

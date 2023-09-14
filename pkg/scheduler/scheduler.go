@@ -24,10 +24,8 @@ func UpdateAllVideos() {
 				defer wg.Done()
 				if err := video.ParseYt(); err != nil {
 					log.Print(err)
-					return
 				}
 				videoChan <- video
-				return
 			}(video)
 		}
 		wg.Wait()
@@ -38,9 +36,7 @@ func UpdateAllVideos() {
 		go func(v models.Video) {
 			if err := v.Update(); err != nil {
 				log.Print(err)
-				return
 			}
-			return
 		}(v)
 	}
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/bot/keyboards"
 	"github.com/Devil666face/gotubebot/pkg/bot/messages"
 	"github.com/Devil666face/gotubebot/pkg/models"
-	"github.com/vitaliy-ukiru/fsm-telebot"
+	"github.com/vitaliy-ukiru/fsm-telebot" //nolint:misspell
 
 	telebot "gopkg.in/telebot.v3"
 	"gopkg.in/telebot.v3/middleware"
