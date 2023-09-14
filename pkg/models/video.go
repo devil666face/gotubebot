@@ -52,13 +52,13 @@ func (video *Video) Delete() error {
 }
 
 func (video *Video) ParseYt() error {
-	title, downloadURL, audioUrl, err := utils.VideoInfo(video.URL)
+	title, downloadURL, audioURL, err := utils.VideoInfo(video.URL)
 	if err != nil {
 		return err
 	}
 	video.Title = title
 	video.DownloadURL = downloadURL
-	video.AudioURL = audioUrl
+	video.AudioURL = audioURL
 	return nil
 }
 
