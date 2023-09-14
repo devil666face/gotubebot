@@ -88,6 +88,6 @@ func OnText(c telebot.Context, s fsm.Context) error {
 func OnBackBtn(c telebot.Context, s fsm.Context) error {
 	defer finish(s)
 	return c.Send(
-		messages.GoBack, keyboards.MainMenu,
+		messages.Back, keyboards.MainMenu,
 	)
 }

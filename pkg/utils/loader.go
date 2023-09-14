@@ -4,17 +4,26 @@ import (
 	"github.com/kkdai/youtube/v2"
 )
 
-func VideoInfo(href string) (string, string, error) {
+func VideoInfo(href string) (title string, downloadUrl string, audioUrl string, err error) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(href)
 	if err != nil {
-		return "", "", err
+		return
 	}
+
+	title = video.Title
 
 	formats := video.Formats.WithAudioChannels()
 
-	return video.Title, formats[0].URL, nil
+	if v := formats[0]; v.URL != "" {
+		downloadUrl = v.URL
+	}
+
+	if v := formats[len(formats)-2]; v.URL != "" {
+		audioUrl = v.URL
+	}
+	return
 }
 
 func PlaylistInfo(href string) (string, []string, error) {

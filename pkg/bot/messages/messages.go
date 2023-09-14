@@ -5,20 +5,19 @@ import (
 )
 
 const (
-	Back   = "Back"
-	GoBack = "Go back"
-	Update = "Update"
-	Delete = "Delete"
+	Back   = "🔙Back"
+	Update = "🔄Update"
+	Delete = "🗑️Delete"
 )
 
 const (
-	Videos = "Videos"
+	Videos = "🎥Videos"
 )
 
 const (
-	Playlists = "Playlists"
+	Playlists = "🎞️Playlists"
 )
 
 func ErrSendMessage(username string) string {
-	return fmt.Sprintf("Error to send message for user - @%s", username)
+	return fmt.Sprintf("❌Error to send message for user - @%s", username)
 }

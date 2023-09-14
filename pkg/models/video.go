@@ -14,12 +14,13 @@ type Video struct {
 	Title       string
 	URL         string
 	DownloadURL string
+	AudioURL    string
 	UserID      uint
 	PlaylistID  uint
 }
 
 func (video Video) String() string {
-	return fmt.Sprintf("<a href='%s'>%s</a>\n<a href='%s'>Download</a>", video.URL, video.Title, video.DownloadURL)
+	return fmt.Sprintf("<a href='%s'>%s</a>\n<a href='%s'><b>🎥Download video</b></a>\n<a href='%s'><b>🎵Download audio</b></a>", video.URL, video.Title, video.DownloadURL, video.AudioURL)
 }
 
 func (video *Video) Get(id uint) error {
@@ -51,12 +52,13 @@ func (video *Video) Delete() error {
 }
 
 func (video *Video) ParseYt() error {
-	title, downloadURL, err := utils.VideoInfo(video.URL)
+	title, downloadURL, audioUrl, err := utils.VideoInfo(video.URL)
 	if err != nil {
 		return err
 	}
 	video.Title = title
 	video.DownloadURL = downloadURL
+	video.AudioURL = audioUrl
 	return nil
 }
 

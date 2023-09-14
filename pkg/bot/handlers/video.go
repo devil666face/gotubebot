@@ -26,10 +26,10 @@ func OnVideosBtn(c telebot.Context, _ fsm.Context) error {
 		log.Print(err)
 	}
 
-	if err := c.Send(messages.ChangeVideo, keyboards.VideoMenu); err != nil {
+	if err := c.Send(messages.VideoList, keyboards.VideoMenu); err != nil {
 		log.Print(err)
 	}
-	return c.Send(messages.VideoList, keyboards.VideoListInline(videos))
+	return c.Send(messages.ChangeVideo, keyboards.VideoListInline(videos))
 }
 
 func OnCreateVideoBtn(c telebot.Context, s fsm.Context) error {
