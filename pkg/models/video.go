@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/Devil666face/gotubebot/pkg/store/database"
 	"github.com/Devil666face/gotubebot/pkg/utils"
@@ -72,7 +73,7 @@ func GetAllVideosForUser(id uint) ([]Video, error) {
 
 func GetAllExpireVideos() ([]Video, error) {
 	var videos = []Video{}
-	if err := database.DB.Where("updated_at < ?", utils.GetOneHourAgo()).Find(&videos); err != nil {
+	if err := database.DB.Where("updated_at < ?", utils.GetTimeAgo(-30*time.Minute)).Find(&videos); err != nil {
 		return videos, err.Error
 	}
 	return videos, nil

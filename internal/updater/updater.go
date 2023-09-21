@@ -7,7 +7,7 @@ import (
 )
 
 func Start() {
-	ticker := time.NewTicker(30 * time.Minute)
+	ticker := time.NewTicker(15 * time.Minute)
 	scheduler.UpdateAllVideos()
 	go func() {
 		<-ticker.C

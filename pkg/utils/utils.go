@@ -15,8 +15,8 @@ func ToUint(s interface{}) uint {
 	return uint(i)
 }
 
-func GetOneHourAgo() time.Time {
+func GetTimeAgo(t time.Duration) time.Time {
 	now := time.Now()
 	// return now.Add(-time.Minute * 15)
-	return now.Add(-time.Hour)
+	return now.Add(t)
 }
