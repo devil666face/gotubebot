@@ -16,9 +16,11 @@ services:
     restart: always
 
   gotubebot:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: gotubebot
+    image: ghcr.io/devil666face/gotubebot:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     environment:
       APP_NAME: gotubebot
       TOKEN: ${TOKEN}
