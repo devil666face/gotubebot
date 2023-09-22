@@ -10,8 +10,10 @@ func Start() {
 	ticker := time.NewTicker(15 * time.Minute)
 	scheduler.UpdateAllVideos()
 	go func() {
-		<-ticker.C
-		scheduler.UpdateAllVideos()
+		for {
+			<-ticker.C
+			scheduler.UpdateAllVideos()
+		}
 		// for {
 		// 	select {
 		// 	case <-ticker.C:
