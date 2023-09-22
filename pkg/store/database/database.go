@@ -4,6 +4,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/Devil666face/gotubebot/pkg/config"
+
 	"gorm.io/gorm"
 )
 
@@ -11,6 +13,13 @@ var DB *gorm.DB
 
 func Migrate(tables ...interface{}) error {
 	return DB.AutoMigrate(tables...)
+}
+
+func Connect(cfg config.Config) error {
+	if cfg.PostgresUse {
+		return psqlDatabase(cfg)
+	}
+	return sqlite3Database(cfg)
 }
 
 func setPath(file string) (string, error) {

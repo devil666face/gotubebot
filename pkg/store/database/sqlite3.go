@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func Sqlite3Database(cfg config.Config) error {
+func sqlite3Database(cfg config.Config) error {
 	path, err := setPath(cfg.Db)
 	if err != nil {
 		return err

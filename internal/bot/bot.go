@@ -17,13 +17,13 @@ func Get() (*telebot.Bot, error) {
 	if err := config.New(); err != nil {
 		return nil, err
 	}
-	if err := database.Sqlite3Database(config.Cfg); err != nil {
+	if err := database.Connect(config.Cfg); err != nil {
 		return nil, err
 	}
 	if err := database.Migrate(
-		&models.Video{},
-		&models.Playlist{},
 		&models.User{},
+		&models.Playlist{},
+		&models.Video{},
 	); err != nil {
 		return nil, err
 	}
