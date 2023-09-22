@@ -9,7 +9,7 @@ on:
 
 jobs:
   push_to_registries:
-    name: Push Docker image to multiple registries
+    name: Push Docker image
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -30,7 +30,7 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: |
-            ghcr.io/devil666face/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
       
       - name: Build and push Docker images
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
