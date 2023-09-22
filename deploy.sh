@@ -2,6 +2,8 @@
 APP_NAME=gotubebot
 
 function with_docker {
+  rm $PWD/docker-compose.yaml
+
   read -p "Create .env file? [y/n] " STATUS
   if [[ "$STATUS" = "y" ]]; then
     read -p "TOKEN=" TOKEN
@@ -19,6 +21,9 @@ function with_systemd {
 
   read -p "Create systemd unit? [y/n] " STATUS
   if [[ "$STATUS" = "y" ]]; then
+    rm $PWD/$APP_NAME.service 
+    rm /etc/systemd/system/$APP_NAME.service
+    
     echo "[Unit]" >> $APP_NAME.service
     echo "Description=$APP_NAME telegram" >> $APP_NAME.service
     echo "After=network.target" >> $APP_NAME.service
