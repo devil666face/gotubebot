@@ -2,7 +2,7 @@ package utils
 
 import (
 	"strconv"
-	"time"
+	// "time"
 )
 
 func ToInt64(s interface{}) int64 {
@@ -15,8 +15,8 @@ func ToUint(s interface{}) uint {
 	return uint(i)
 }
 
-func GetTimeAgo(t time.Duration) time.Time {
-	now := time.Now()
-	// return now.Add(-time.Minute * 15)
-	return now.Add(t)
-}
+// func GetTimeAgo(t time.Duration) time.Time {
+// 	now := time.Now()
+// 	// return now.Add(-time.Minute * 15)
+// 	return now.Add(t)
+// }

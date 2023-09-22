@@ -7,8 +7,13 @@ import (
 	"github.com/Devil666face/gotubebot/pkg/models"
 )
 
+const (
+	ExpireVideosMessage = "All expired videos:"
+)
+
 func UpdateAllVideos() {
 	videos, err := models.GetAllExpireVideos()
+	log.Print(ExpireVideosMessage, videos)
 	if err != nil {
 		log.Print(err)
 		return

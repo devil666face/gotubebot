@@ -72,9 +72,31 @@ func GetAllVideosForUser(id uint) ([]Video, error) {
 }
 
 func GetAllExpireVideos() ([]Video, error) {
-	var videos = []Video{}
-	if err := database.DB.Where("updated_at < ?", utils.GetTimeAgo(-30*time.Minute)).Find(&videos); err != nil {
+	var (
+		videos       = []Video{}
+		expireVideos = []Video{}
+	)
+	// if err := database.DB.Where("updated_at < ?", utils.GetTimeAgo(-30*time.Minute)).Find(&videos); err != nil {
+	// 	return videos, err.Error
+	// }
+	if err := database.DB.Find(&videos); err.Error != nil {
 		return videos, err.Error
 	}
-	return videos, nil
+	for _, v := range videos {
+		if v.IsExpire() {
+			expireVideos = append(expireVideos, v)
+		}
+	}
+	return expireVideos, nil
+}
+
+func (video *Video) IsExpire() bool {
+	e, err := utils.GetExpireParam(video.DownloadURL)
+	if err != nil {
+		return true
+	}
+	if e <= time.Now().Unix() {
+		return true
+	}
+	return false
 }
