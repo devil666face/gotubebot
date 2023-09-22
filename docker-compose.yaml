@@ -17,7 +17,7 @@ services:
 
   gotubebot:
     container_name: gotubebot
-    image: ghcr.io/devil666face/gotubebot:latest
+    image: ghcr.io/devil666face/gotubebot:main
     # build:
     #   context: .
     #   dockerfile: Dockerfile
