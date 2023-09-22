@@ -11,8 +11,9 @@ services:
       PGDATA: /data/postgres
     volumes:
        - ./postgres:/data/postgres
-    ports:
-      - "127.0.0.1:5432:5432"
+    # ports:
+    #   - "127.0.0.1:5432:5432"
+    restart: always
 
   gotubebot:
     build:
@@ -22,6 +23,7 @@ services:
       APP_NAME: gotubebot
       TOKEN: ${TOKEN}
       POSTGRES: ${POSTGRES}
+      POSTGRES_HOST: ${POSTGRES_HOST}
     depends_on:
       - postgres
-    # restart: always
+    restart: always

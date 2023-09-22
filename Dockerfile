@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ENV APP_NAME "gotubebot"
 ENV TOKEN ""
-ENV DEPS "wget"
+ENV DEPS "wget ca-certificates"
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update --quiet --quiet && \
