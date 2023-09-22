@@ -131,7 +131,7 @@ func OnShowPlaylistInlineBtn(c telebot.Context, _ fsm.Context) error {
 	var message string
 	for i, v := range playlist.Videos {
 		message += fmt.Sprintf("%d. %s\n", i+1, v)
-		if i%10 == 0 {
+		if i%5 == 0 {
 			if err := c.Send(message); err != nil {
 				log.Print(err)
 			}
