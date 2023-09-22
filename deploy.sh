@@ -12,6 +12,9 @@ function with_docker {
     echo "POSTGRES_HOST=postgres" >> .env
   fi
   wget --no-check-certificate https://raw.githubusercontent.com/Devil666face/${APP_NAME}/main/docker-compose.yaml
+  docker-compose down
+  docker-compose build --pull
+  docker-compose up -d
 }
 
 function with_systemd {
