@@ -18,6 +18,8 @@ services:
   gotubebot:
     container_name: gotubebot
     image: ghcr.io/devil666face/gotubebot:main
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     # build:
     #   context: .
     #   dockerfile: Dockerfile
