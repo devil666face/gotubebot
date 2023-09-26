@@ -5,7 +5,9 @@
 
 ![](https://github.com/Devil666face/gotubebot/blob/main/.github/icon.png)
 
-Deploy using systemd
+Deploy - systemd/docker-compose
 ```bash
 sudo bash -c "$(wget https://raw.githubusercontent.com/Devil666face/gotubebot/main/deploy.sh -O -)"
 ```
+
+[Try this](https://t.me/gophertubebot)
